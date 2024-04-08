@@ -1,6 +1,10 @@
-
+import { useState } from "react"
 
 function App() {
+
+  const [lookup, setLookup] = useState("")
+  const [generate, setGenerate] = useState("")
+  const [update, setUpdate] = useState("")
 
   return (
     <div className="container">
@@ -14,29 +18,34 @@ function App() {
                 <input 
                   type="text"
                   placeholder="lookup"
+                  value={lookup}
+                  onChange={(e)=>setLookup(e.target.value)}
                 />
                 <button>
                   Submit Lookup
                 </button>    
             </div>
             <div className="input_section">
-                <p>Lookup</p>
+                <p>Update</p>
                 <input 
                   type="text"
                   placeholder="lookup"
+                  value={generate}
+                  onChange={(e)=>setGenerate(e.target.value)}
                 />
                 <button>
-                  Submit Lookup
+                  Submit Update
                 </button>    
             </div>
             <div className="input_section">
-                <p>Lookup</p>
+                <p>Generate</p>
+                {/* Changing this to a dropdown shortly */}
                 <input 
                   type="text"
                   placeholder="lookup"
                 />
                 <button>
-                  Submit Lookup
+                  Submit Generate
                 </button>    
             </div>
           </div>
