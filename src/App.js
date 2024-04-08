@@ -54,12 +54,14 @@ function App() {
       return
     }
 
+    //console.log(process.env.REACT_APP_APIKEY)
 
     try {
       const results = await fetch(GENERATE_ENDPOINT, {
         method:"POST",
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-api-key':process.env.REACT_APP_APIKEY
         },
         body:JSON.stringify(generate)
       })
