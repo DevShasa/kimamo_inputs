@@ -1,10 +1,100 @@
 import { useState } from "react"
 
+const LOOKUP_ENDPOINT = ""
+const GENERATE_ENDPOINT = ""
+const UPDATE_ENDPOINT = ""
+
 function App() {
 
   const [lookup, setLookup] = useState("")
   const [generate, setGenerate] = useState("")
   const [update, setUpdate] = useState("")
+  const [loading, setLoading] = useState(false)
+
+
+  async function submitLookup(){
+    if(!lookup){
+      alert("LOOKUP INPUT IS EMPTY")
+      return
+    }
+
+    try {
+      const results = await fetch(`${LOOKUP_ENDPOINT}/lookup?value=${lookup}`, {
+        method:"GET",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+      })
+
+      if(results.ok){
+        // query is successful 
+        const data = await results.json()
+        console.log(data) // display the data here ?  
+      }
+
+      throw new Error
+
+    } catch (error) {
+      alert("SOMETHING WENT WRONG SUBMITTING LOOKUP")
+      console.log("error")
+    }
+  }
+
+  async function subbmitGenerate(){
+    if(!lookup){
+      alert("LOOKUP INPUT IS EMPTY")
+      return
+    }
+
+    try {
+      const results = await fetch(GENERATE_ENDPOINT, {
+        method:"POST",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(generate)
+      })
+
+      if(results.ok){
+        const data = await results.json()
+        console.log(data) 
+      }
+
+      throw new Error
+
+    } catch (error) {
+      alert("SOMETHING WENT WRONG SUBMITTING GENERATE")
+      console.log("error")
+    }
+  }
+
+  async function submitUpdate(){
+    if(!lookup){
+      alert("LOOKUP INPUT IS EMPTY")
+      return
+    }
+
+    try {
+      const results = await fetch(UPDATE_ENDPOINT, {
+        method:"PUT",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(generate)
+      })
+
+      if(results.ok){
+        const data = await results.json()
+        console.log(data) 
+      }
+
+      throw new Error
+
+    } catch (error) {
+      alert("SOMETHING WENT WRONG SUBMITTING GENERATE")
+      console.log("error")
+    }
+  }
 
   return (
     <div className="container">
@@ -21,7 +111,7 @@ function App() {
                   value={lookup}
                   onChange={(e)=>setLookup(e.target.value)}
                 />
-                <button>
+                <button onClick={submitLookup}>
                   Submit Lookup
                 </button>    
             </div>
@@ -30,10 +120,10 @@ function App() {
                 <input 
                   type="text"
                   placeholder="lookup"
-                  value={generate}
-                  onChange={(e)=>setGenerate(e.target.value)}
+                  value={update}
+                  onChange={(e)=>setUpdate(e.target.value)}
                 />
-                <button>
+                <button onClick={submitUpdate}>
                   Submit Update
                 </button>    
             </div>
