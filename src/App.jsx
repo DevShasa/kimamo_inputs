@@ -91,7 +91,7 @@ function App() {
       throw new Error
 
     } catch (error) {
-      alert("SOMETHING WENT WRONG SUBMITTING GENERATE")
+      alert("SOMETHING WENT WRONG SUBMITTING UPDATE")
       console.log("error")
     }
   }
@@ -130,10 +130,13 @@ function App() {
             <div className="input_section">
                 <p>Generate</p>
                 {/* Changing this to a dropdown shortly */}
-                <input 
-                  type="text"
-                  placeholder="lookup"
-                />
+                <select value={generate} onChange={(e)=>setGenerate(e.target.value)}>
+                  <option value="">Select an option</option>
+                  <option value="Option 1">Select option one</option>
+                  <option value="Option 2">Select option two</option>
+                  <option value="Option 3">Select option three</option>
+                  <option value="Option 4">Select option four</option>
+                </select>
                 <button>
                   Submit Generate
                 </button>    
