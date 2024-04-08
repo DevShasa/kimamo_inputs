@@ -44,6 +44,7 @@
 .input_section > p{
   font-size: larger;
   font-weight: bold;
+  text-align: center;
 }
 
 .input_section > input{
@@ -65,3 +66,9 @@ select{
   font-size: 20px;
   border-radius: 5px;
   margin-bottom: 5px;}
+
+#label{
+  text-align: left;
+  font-size:medium;
+  font-weight:400;
+}
