@@ -25,15 +25,12 @@ function App() {
           'Content-Type': 'application/json'
         },
       })
-
       if(results.ok){
         // query is successful 
         const data = await results.json()
         console.log(data) // display the data here ?  
       }
-
       throw new Error
-
     } catch (error) {
       alert("SOMETHING WENT WRONG SUBMITTING LOOKUP")
       console.log("error")
@@ -137,7 +134,7 @@ function App() {
                   <option value="Option 3">Select option three</option>
                   <option value="Option 4">Select option four</option>
                 </select>
-                <button>
+                <button onClick={subbmitGenerate}>
                   Submit Generate
                 </button>    
             </div>
