@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-const LOOKUP_ENDPOINT = ""
-const GENERATE_ENDPOINT = ""
-const UPDATE_ENDPOINT = ""
+const LOOKUP_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/refernceId?refernceNumber="
+const GENERATE_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/references"
+const UPDATE_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/refernceNumber"
 
 function App() {
 
@@ -19,7 +19,7 @@ function App() {
     }
 
     try {
-      const results = await fetch(`${LOOKUP_ENDPOINT}/lookup?value=${lookup}`, {
+      const results = await fetch(LOOKUP_ENDPOINT+lookup, {
         method:"GET",
         headers:{
           'Content-Type': 'application/json'
@@ -126,7 +126,6 @@ function App() {
             </div>
             <div className="input_section">
                 <p>Generate</p>
-                {/* Changing this to a dropdown shortly */}
                 <select value={generate} onChange={(e)=>setGenerate(e.target.value)}>
                   <option value="">Select an option</option>
                   <option value="Option 1">Select option one</option>
