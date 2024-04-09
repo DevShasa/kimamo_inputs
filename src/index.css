@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-
+  background-color: rgb(250, 250, 250);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -40,11 +40,20 @@
   flex-direction: column;
   gap: 5px;
   margin-top: 20px;
+  background-color: white;
+  -webkit-box-shadow: 7px 6px 17px -9px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 7px 6px 17px -9px rgba(66, 68, 90, 1);
+  box-shadow: 7px 6px 17px -9px rgba(66, 68, 90, 1);
 }
 .input_section > p{
   font-size: larger;
   font-weight: bold;
   text-align: center;
+}
+
+.topBar{
+  padding: 20px;
+
 }
 
 .input_section > input{
@@ -71,4 +80,11 @@ select{
   text-align: left;
   font-size:medium;
   font-weight:400;
+}
+
+.loader_container{
+  padding: 20px;
+  min-height: 40vh;
+  display: grid;
+  place-items:center;
 }

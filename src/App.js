@@ -122,8 +122,8 @@ function App() {
 
   return (
     <div className="container">
-        <div>
-          <p>Top Bar</p>
+        <div className="topBar">
+          <img src="crane.svg" alt="logo"/>
         </div>
         <div className="contents">
           <div className="content_search_inputs">
@@ -187,7 +187,6 @@ function App() {
             </div>
           </div>
           <div className="results">
-            <p>results</p>
             {loading
               ? <Loading />
               : output.queryResults && output.queryName
