@@ -1,4 +1,6 @@
 import { useState } from "react"
+import Loading from "./components/Loading"
+import Results from "./components/results/Results"
 
 // const LOOKUP_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/refernceId?refernceNumber="
 const GENERATE_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/references"
@@ -17,7 +19,7 @@ function App() {
     queryResults:""
   })
   // const [update, setUpdate] = useState("")
-  // const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
 
   function captureGenerateInput(e){
@@ -58,6 +60,7 @@ function App() {
       return
     }
     const generateBody = {...generate, count:Number(generate.count)}
+    setLoading(true)
     try {
       const results = await fetch(GENERATE_ENDPOINT, {
         method:"POST",
@@ -74,7 +77,7 @@ function App() {
         console.log("GENERATE ENDPOINT DATA:::",data)
         setOutput({
           queryName:"GENERATE",
-          queryResults: JSON.stringify(data) // just to show something on the screen for now 
+          queryResults: data // just to show something on the screen for now 
         })
         return  
       }
@@ -84,6 +87,8 @@ function App() {
     } catch (error) {
       alert("SOMETHING WENT WRONG SUBMITTING GENERATE")
       console.log("GENERATE ERROR::", error)
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -159,13 +164,6 @@ function App() {
                   <option value="HURLBURTON">HURLBURTON</option>
                   <option value="CUMMINS">CUMMINS</option>
                 </select>
-                {/* <input 
-                  type="text"
-                  placeholder="Client"
-                  value={generate.client}
-                  onChange={(e)=>captureGenerateInput(e)}
-                  name="client"
-                /> */}
                 <p id="label">Unit</p>
                 <input 
                   type="text"
@@ -181,6 +179,7 @@ function App() {
                   value={generate.count}
                   onChange={(e)=>captureGenerateInput(e)}
                   name="count"
+                  min={1}
                 />
                 <button onClick={subbmitGenerate}>
                   Submit Generate
@@ -189,7 +188,12 @@ function App() {
           </div>
           <div className="results">
             <p>results</p>
-            {output.queryResults && <p>{output.queryResults}</p>}
+            {loading
+              ? <Loading />
+              : output.queryResults && output.queryName
+              ? <Results data={output}/>
+              : <p>Select one of the inputs to view results</p>
+            }
           </div>
         </div>
     </div>
