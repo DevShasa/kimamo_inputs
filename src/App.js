@@ -1,18 +1,22 @@
 import { useState } from "react"
 
-const LOOKUP_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/refernceId?refernceNumber="
+// const LOOKUP_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/refernceId?refernceNumber="
 const GENERATE_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/references"
-const UPDATE_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/refernceNumber"
+// const UPDATE_ENDPOINT = "https://api-uat.craneww.com/ws/rest/uat/v0/craneReference/RefernceNumber/refernceNumber"
 
 function App() {
 
-  const [lookup, setLookup] = useState("")
+  // const [lookup, setLookup] = useState("")
   const [generate, setGenerate] = useState({
     client:"",
     Unit:"",
     count:""
   })
-  const [update, setUpdate] = useState("")
+  const [output, setOutput] = useState({
+    queryName:"",
+    queryResults:""
+  })
+  // const [update, setUpdate] = useState("")
   // const [loading, setLoading] = useState(false)
 
 
@@ -53,9 +57,7 @@ function App() {
       alert("ONE OR MORE INPUTS FOR GENERATE IS EMPTY")
       return
     }
-
-    //console.log(process.env.REACT_APP_APIKEY)
-
+    const generateBody = {...generate, count:Number(generate.count)}
     try {
       const results = await fetch(GENERATE_ENDPOINT, {
         method:"POST",
@@ -63,13 +65,17 @@ function App() {
           'x-api-key':process.env.REACT_APP_APIKEY,
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify({ "client": "APPLE", "Unit": "HHCD", "count": 4 })
+        body:JSON.stringify(generateBody)
       })
 
       console.log("GENERATE ENDPOINT REQUEST:::", results)
       if(results.ok){
         const data = await results.json()
         console.log("GENERATE ENDPOINT DATA:::",data)
+        setOutput({
+          queryName:"GENERATE",
+          queryResults: JSON.stringify(data) // just to show something on the screen for now 
+        })
         return  
       }
 
@@ -142,21 +148,24 @@ function App() {
             </div> */}
             <div className="input_section">
                 <p>Generate</p>
-                {/* <select value={generate} onChange={(e)=>setGenerate(e.target.value)}>
-                  <option value="">Select an option</option>
-                  <option value="Option 1">Select option one</option>
-                  <option value="Option 2">Select option two</option>
-                  <option value="Option 3">Select option three</option>
-                  <option value="Option 4">Select option four</option>
-                </select> */}
                 <p id="label">Client</p>
-                <input 
+                <select value={generate.client} onChange={(e)=>setGenerate(prev =>({
+                  ...prev,
+                  client: e.target.value
+                }))}>
+                  <option value="">Select an option</option>
+                  <option value="APPLE">APPLE</option>
+                  <option value="AMAZON">AMAZON</option>
+                  <option value="HURLBURTON">HURLBURTON</option>
+                  <option value="CUMMINS">CUMMINS</option>
+                </select>
+                {/* <input 
                   type="text"
                   placeholder="Client"
                   value={generate.client}
                   onChange={(e)=>captureGenerateInput(e)}
                   name="client"
-                />
+                /> */}
                 <p id="label">Unit</p>
                 <input 
                   type="text"
@@ -179,7 +188,8 @@ function App() {
             </div>
           </div>
           <div className="results">
-            results go here
+            <p>results</p>
+            {output.queryResults && <p>{output.queryResults}</p>}
           </div>
         </div>
     </div>
