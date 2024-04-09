@@ -88,7 +88,18 @@ select{
   place-items:center;
 }
 
+.results_container{
+  padding-inline: 10px;
+}
+
 .results_top{
   display: flex;
   gap: 10px;
+}
+
+.reference_item{
+  margin-bottom: 5px;
+  border-bottom: 1px solid grey;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
