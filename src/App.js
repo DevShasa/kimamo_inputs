@@ -60,23 +60,24 @@ function App() {
       const results = await fetch(GENERATE_ENDPOINT, {
         method:"POST",
         headers:{
+          'x-api-key':process.env.REACT_APP_APIKEY,
           'Content-Type': 'application/json',
-          'x-api-key':process.env.REACT_APP_APIKEY
         },
-        body:JSON.stringify(generate)
+        body:JSON.stringify({ "client": "APPLE", "Unit": "HHCD", "count": 4 })
       })
 
       console.log("GENERATE ENDPOINT REQUEST:::", results)
       if(results.ok){
         const data = await results.json()
-        console.log("GENERATE ENDPOINT DATA:::",data) 
+        console.log("GENERATE ENDPOINT DATA:::",data)
+        return  
       }
 
       throw new Error()
 
     } catch (error) {
       alert("SOMETHING WENT WRONG SUBMITTING GENERATE")
-      console.log("error")
+      console.log("GENERATE ERROR::", error)
     }
   }
 
@@ -159,7 +160,7 @@ function App() {
                 <p id="label">Unit</p>
                 <input 
                   type="text"
-                  placeholder="unit"
+                  placeholder="Unit"
                   value={generate.Unit}
                   onChange={(e)=>captureGenerateInput(e)}
                   name="Unit"
